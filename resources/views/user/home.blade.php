@@ -7,11 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    hello i am admin category page
+    <h1>User Home Page</h1>
 
-    <h3>Role - {{ Auth::user()->role }}</h3>
+    Role - {{ Auth::user()->role }}
 
-    <form action="{{ route('logout') }}" method="POST">
+    <form action="{{ route('logout') }}" method="post">
         @csrf
         <input type="submit" value="Logout">
     </form>
