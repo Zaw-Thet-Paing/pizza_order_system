@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="table-data__tool-right">
-                    <a href="category.html">
+                    <a href="{{ route('category#createPage') }}">
                         <button class="au-btn au-btn-icon au-btn--green au-btn--small">
                             <i class="zmdi zmdi-plus"></i>Add Category
                         </button>
@@ -26,33 +26,37 @@
                 </div>
             </div>
             <div class="table-responsive table-responsive-data2">
-                <table class="table table-data2">
+                <table class="table table-data2 text-center">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Category Name</th>
+                            <th class="col-6">Category Name</th>
                             <th>Created Date</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="tr-shadow">
-                            <td>1</td>
-                            <td>Samsung S8 Black</td>
-                            <td>2018-09-27 02:12</td>
-                            <td>
-                                CRUD
-                            </td>
-                        </tr>
-                        <tr class="spacer"></tr>
-                        <tr class="tr-shadow">
-                            <td>2</td>
-                            <td>Samsung S8 Black</td>
-                            <td>2018-09-27 02:12</td>
-                            <td>
-                                CRUD
-                            </td>
-                        </tr>
+                        @foreach ($categories as $category)
+                            <tr class="tr-shadow">
+                                <td>{{ $category->category_id }}</td>
+                                <td>{{ $category->name }}</td>
+                                <td>{{ $category->created_at->format('j-F-Y') }}</td>
+                                <td>
+                                    <div class="table-data-feature">
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="View">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
