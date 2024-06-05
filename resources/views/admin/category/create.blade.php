@@ -23,7 +23,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="cc-payment" class="control-label mb-1">Name</label>
-                                    <input id="cc-pament" name="categoryName" value="{{ old('categoryName') }}" type="text" class="form-control @error('categoryName') is-invalid @enderror" aria-required="true" aria-invalid="false" placeholder="Seafood..." autofocus>
+                                    <input id="cc-pament" name="categoryName" value="{{ old('categoryName') }}" type="text" class="form-control @error('categoryName') is-invalid @enderror" aria-required="true" aria-invalid="false" placeholder="Type category...." autofocus>
                                     @error('categoryName')
                                         <div class="invalid-feedback">
                                             {{ $message }}

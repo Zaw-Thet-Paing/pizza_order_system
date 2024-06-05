@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="login-form">
+
         <form action="{{ route('login') }}" method="post">
             @csrf
             <div class="form-group">
