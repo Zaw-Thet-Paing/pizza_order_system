@@ -13,7 +13,14 @@
                             <div class="card-title">
                                 <h3 class="text-center title-2">Account Info</h3>
                             </div>
-
+                            @if (session('updateSuccess'))
+                                <div class="">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ session('updateSuccess') }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            @endif
                             <hr>
 
                             <div class="row">
@@ -22,7 +29,7 @@
                                     @if (Auth::user()->image == null)
                                         <img src="{{ asset('images/defaultUser.jpg') }}" alt="John Doe" class="shadow-sm" />
                                     @else
-                                        <img src="{{ asset('admin/images/icon/avatar-01.jpg') }}" alt="John Doe" />
+                                        <img src="{{ asset('storage/'.Auth::user()->image) }}" alt="John Doe" />
                                     @endif
                                 </div>
 
@@ -30,6 +37,7 @@
                                     <h4 class="my-4"> <i class="fa-solid fa-user-pen me-2"></i> {{ Auth::user()->name }}</h4>
                                     <h4 class="my-4"> <i class="fa-solid fa-envelope me-2"></i> {{ Auth::user()->email }}</h4>
                                     <h4 class="my-4"> <i class="fa-solid fa-phone me-2"></i> {{ Auth::user()->phone }}</h4>
+                                    <h4 class="my-4"> <i class="fa-solid fa-mars-and-venus me-2"></i> {{ Auth::user()->gender }}</h4>
                                     <h4 class="my-4"> <i class="fa-solid fa-address-card me-2"></i> {{ Auth::user()->address }}</h4>
                                     <h4 class="my-4"> <i class="fa-solid fa-user-clock me-2"></i> {{ Auth::user()->created_at->format('j-F-Y') }}</h4>
                                 </div>

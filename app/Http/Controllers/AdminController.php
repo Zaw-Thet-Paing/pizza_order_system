@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -48,6 +50,56 @@ class AdminController extends Controller
     //direct admin profile page
     public function edit(){
         return view('admin.account.edit');
+    }
+
+    //update account
+    public function update($id, Request $request){
+
+        $this->accountValidationCheck($request);
+        $data = $this->getUserData($request);
+
+        if($request->hasFile('image')){
+            //1. Old image name | check => delete | store
+            $dbImage = User::where('id', $id)->first();
+            $dbImage = $dbImage->image;
+
+            if($dbImage != NULL){
+                Storage::delete('public/' . $dbImage);
+            }
+
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public', $fileName);
+            $data['image'] = $fileName;
+
+        }
+
+        User::where('id', $id)->update($data);
+
+        return redirect()->route('admin#details')->with(['updateSuccess'=> 'Admin Account Updated...']);
+
+    }
+
+    //account validation check
+    private function accountValidationCheck($request){
+        Validator::make($request->all(), [
+            'name'=>'required',
+            'email'=> 'required',
+            'phone'=> 'required',
+            'gender'=> 'required',
+            'address'=> 'required'
+        ])->validate();
+    }
+
+    //request user data
+    private function getUserData($request){
+        return [
+            'name'=> $request->name,
+            'email'=> $request->email,
+            'phone'=> $request->phone,
+            'gender'=> $request->gender,
+            'address'=> $request->address,
+            'updated_at'=> Carbon::now()
+        ];
     }
 
     // password validation check
