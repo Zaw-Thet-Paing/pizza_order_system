@@ -45,6 +45,11 @@ class AdminController extends Controller
         return back()->with(['notMatch'=> 'The old password not match! Try again!']);
     }
 
+    //direct admin profile page
+    public function edit(){
+        return view('admin.account.edit');
+    }
+
     // password validation check
     private function passwordValidationCheck($request){
         Validator::make($request->all(), [

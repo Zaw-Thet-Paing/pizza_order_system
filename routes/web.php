@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
             //account
             Route::get('details', [AuthController::class, 'details'])->name('admin#details');
+            Route::get('edit', [AdminController::class, 'edit'])->name('admin#edit');
         });
     });
 

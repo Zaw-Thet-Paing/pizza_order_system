@@ -38,9 +38,11 @@
 
                             <div class="row mt-3">
                                 <div class="col-4 offset-2">
-                                    <button class="btn btn-dark text-white">
-                                        <i class="fa-solid fa-pen-to-square me-2"></i> Edit Profile
-                                    </button>
+                                    <a href="{{ route('admin#edit') }}">
+                                        <button class="btn btn-dark text-white">
+                                            <i class="fa-solid fa-pen-to-square me-2"></i> Edit Profile
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
 
