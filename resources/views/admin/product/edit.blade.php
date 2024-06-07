@@ -50,16 +50,6 @@
 
                             </div>
 
-                            <div class="row mt-3">
-                                <div class="col-4 offset-2">
-                                    <a href="{{ route('admin#edit') }}">
-                                        <button class="btn btn-dark text-white">
-                                            <i class="fa-solid fa-pen-to-square me-2"></i> Edit Product
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>

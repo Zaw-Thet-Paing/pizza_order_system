@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -26,7 +27,7 @@ class ProductController extends Controller
 
     // create product
     public function create(Request $request){
-        $this->productValidationCheck($request);
+        $this->productValidationCheck($request, "create");
 
         $data = $this->requestProductInfo($request);
 
@@ -53,6 +54,36 @@ class ProductController extends Controller
         return view('admin.product.edit', compact('product'));
     }
 
+    public function updatePage($id){
+        $product = Product::where('id', $id)->first();
+        $categories = Category::get();
+        return view('admin.product.update', compact('product', 'categories'));
+    }
+
+    public function update(Request $request){
+        $this->productValidationCheck($request, "update");
+        $data = $this->requestProductInfo($request);
+
+        if($request->hasFile('image')){
+            $oldImageName = Product::where('id', $request['id'])->first();
+            $oldImageName = $oldImageName->image;
+
+            if($oldImageName != null){
+                Storage::delete('public/'.$oldImageName);
+            }
+
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public', $fileName);
+            $data['image'] = $fileName;
+
+        }
+
+        Product::where('id', $request['id'])->update($data);
+
+        return redirect()->route('product#list')->with(['productUpdated'=> 'Product Updated Successfully...']);
+
+    }
+
     private function requestProductInfo($request){
         return [
             'name'=> $request->name,
@@ -63,14 +94,16 @@ class ProductController extends Controller
         ];
     }
 
-    private function productValidationCheck($request){
-        Validator::make($request->all(), [
-            'name'=> 'required|min:5|unique:products,name',
+    private function productValidationCheck($request, $action){
+        $validationRules = [
+            'name'=> 'required|min:5|unique:products,name,' . $request['id'],
             'category_id'=> 'required',
             'description'=> 'required|min:10',
-            'image'=> 'required|mimes:png,jpg,jpeg|file',
             'waiting_time'=> 'required',
             'price'=> 'required'
-        ])->validate();
+        ];
+
+        $validationRules['image'] = $action == "create" ? 'required|mimes:png,jpg,jpeg|file' : "mimes:png,jpg,jpeg|file";
+        Validator::make($request->all(), $validationRules)->validate();
     }
 }

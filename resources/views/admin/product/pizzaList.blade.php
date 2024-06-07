@@ -68,10 +68,10 @@
                 </div>
             @endif
 
-            @if (session('updatedSuccess'))
+            @if (session('productUpdated'))
                 <div class="col-4 offset-8">
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('updatedSuccess') }}
+                        {{ session('productUpdated') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                                                     <i class="fa fa-eye"></i>
                                                 </button>
                                             </a>
-                                            <a href="" class="me-2">
+                                            <a href="{{ route('product#updatePage', $product->id) }}" class="me-2">
                                                 <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
                                                     <i class="zmdi zmdi-edit"></i>
                                                 </button>
