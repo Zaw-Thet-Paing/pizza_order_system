@@ -11,7 +11,10 @@ class ProductController extends Controller
 {
     //direct to product list
     public function list(){
-        $products = Product::orderBy('created_at', 'desc')->paginate(5);
+        $products = Product::when(request('key'), function($query){
+            $query->where('name', 'like', '%'.request('key').'%');
+        })->orderBy('created_at', 'desc')->paginate(3);
+        $products->append(request()->all());
         return view('admin.product.pizzaList', compact('products'));
     }
 
@@ -37,6 +40,17 @@ class ProductController extends Controller
 
         return redirect()->route('product#list')->with(['productCreated'=> 'Product Created Success...']);
 
+    }
+
+    //delete product
+    public function delete($id){
+        Product::where('id', $id)->delete();
+        return redirect()->route('product#list')->with(['productDeleted'=> 'Product Deleted Success...']);
+    }
+
+    public function edit($id){
+        $product = Product::where('id', $id)->first();
+        return view('admin.product.edit', compact('product'));
     }
 
     private function requestProductInfo($request){

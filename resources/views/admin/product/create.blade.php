@@ -69,7 +69,7 @@
 
                                 <div class="form-group">
                                     <label for="cc-payment" class="control-label mb-1">Waiting Time</label>
-                                    <input id="cc-pament" name="waiting_time" value="{{ old('waiting_time') }}" type="text" class="form-control @error('price') is-invalid @enderror" aria-required="true" aria-invalid="false" placeholder="Type waiting_time...." autofocus>
+                                    <input id="cc-pament" name="waiting_time" value="{{ old('waiting_time') }}" type="text" class="form-control @error('waiting_time') is-invalid @enderror" aria-required="true" aria-invalid="false" placeholder="Type waiting_time...." autofocus>
                                     @error('waiting_time')
                                         <div class="invalid-feedback">
                                             {{ $message }}
