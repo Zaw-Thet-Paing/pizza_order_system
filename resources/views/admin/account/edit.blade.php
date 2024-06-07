@@ -27,7 +27,12 @@
                                         @endif
 
                                         <div class="mt-1">
-                                            <input type="file" name="image" class="form-control">
+                                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
+                                            @error('image')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
 
                                         <div class="mt-3">

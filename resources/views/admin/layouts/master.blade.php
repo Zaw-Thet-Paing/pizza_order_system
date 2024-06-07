@@ -55,8 +55,12 @@
                     <ul class="list-unstyled navbar__list">
                         <li>
                             <a href="{{ route('category#list') }}">
-                                {{-- <i class="fas fa-chart-bar"></i>Category --}}
                                 <i class="fas fa-list"></i> Category
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('product#list') }}">
+                                <i class="fas fa-pizza-slice"></i> Products
                             </a>
                         </li>
                     </ul>

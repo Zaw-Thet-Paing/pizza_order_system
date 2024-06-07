@@ -15,6 +15,7 @@
                 <div class="col-lg-6 offset-3">
                     <div class="card">
                         <div class="card-body">
+                        <div class="card-body">
                             <div class="card-title">
                                 <h3 class="text-center title-2">Create Your Category</h3>
                             </div>
