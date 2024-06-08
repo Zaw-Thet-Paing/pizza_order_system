@@ -26,10 +26,14 @@
                             <div class="row">
 
                                 <div class="col-3 offset-2">
-                                    @if (Auth::user()->image == null)
-                                        <img src="{{ asset('images/defaultUser.jpg') }}" alt="John Doe" class="shadow-sm" />
+                                    @if (Auth::user()->image == NULL)
+                                        @if (Auth::user()->gender == "male")
+                                            <img src="{{ asset('images/profile-default-male.jpg') }}" class="img-thumbnail shadow-sm">
+                                        @else
+                                            <img src="{{ asset('images/profile-default-female.jpg') }}" class="img-thumbnail shadow-sm">
+                                        @endif
                                     @else
-                                        <img src="{{ asset('storage/'.Auth::user()->image) }}" alt="John Doe" />
+                                        <img src="{{ asset('storage/'.Auth::user()->image) }}" class="img-thumbnail shadow-sm">
                                     @endif
                                 </div>
 

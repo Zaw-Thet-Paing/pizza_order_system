@@ -44,6 +44,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('edit', [AdminController::class, 'edit'])->name('admin#edit');
             Route::post('update/{id}', [AdminController::class, 'update'])->name('admin#update');
 
+            //admin list
+            Route::get('list', [AdminController::class, 'list'])->name('admin#list');
+            Route::get('delete/{id}', [AdminController::class, 'delete'])->name('admin#delete');
+            Route::get('changeRole/{id}', [AdminController::class, 'changeRole'])->name('admin#changeRole');
+            Route::post('change/role/{id}', [AdminController::class, 'change'])->name('admin#change');
         });
 
         //products
@@ -56,6 +61,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('update/{id}', [ProductController::class, 'updatePage'])->name('product#updatePage');
             Route::post('update', [ProductController::class, 'update'])->name("product#update");
         });
+
+
     });
 
 

@@ -79,6 +79,42 @@ class AdminController extends Controller
 
     }
 
+    //admin list
+    public function list(){
+        $admin = User::when(request('key'), function($query){
+                                $query->orWhere('name', 'like', '%' . request('key') . '%')
+                                      ->orWhere('email', 'like', '%' . request('key') . '%')
+                                      ->orWhere('gender', 'like', '%' . request('key') . '%')
+                                      ->orWhere('phone', 'like', '%' . request('key') . '%')
+                                      ->orWhere('address', 'like', '%' . request('key') . '%');
+                            })
+                            ->where('role', 'admin')->paginate(3);
+
+        $admin->appends(request()->all());
+        return view('admin.account.list', compact('admin'));
+    }
+
+    //delete account
+    public function delete($id){
+        User::where('id', $id)->delete();
+        return back()->with(['deleteSuccess'=> 'Admin Account Deleted...']);
+    }
+
+    //change admin role
+    public function changeRole($id){
+        $account = User::where('id', $id)->first();
+        return view('admin.account.changeRole', compact('account'));
+    }
+
+    public function change($id, Request $request){
+        $data = [
+            'role'=> $request->role
+        ];
+        User::where('id', $id)->update($data);
+
+        return redirect()->route('admin#list');
+    }
+
     //account validation check
     private function accountValidationCheck($request){
         Validator::make($request->all(), [
