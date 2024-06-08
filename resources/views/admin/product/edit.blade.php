@@ -42,7 +42,7 @@
                                         <span class="my-3 col me-1 btn btn-dark text-white"> <i class="fa-solid fa-money-bill-1-wave me-2 fs-4"></i> {{ $product->price }} Kyats</span>
                                         <span class="my-3 col me-1 btn btn-dark text-white"> <i class="fa-solid fa-clock me-2 fs-4"></i> {{ $product->waiting_time }} mins</span>
                                         <span class="my-3 col me-1 btn btn-dark text-white"> <i class="fa-solid fa-eye me-2 fs-4"></i> {{ $product->view_count }}</span>
-                                        <span class="my-3 col me-1 btn btn-dark text-white"> <i class="fa-solid fa-clone me-2 fs-4"></i> {{ $product->category_id }}</span>
+                                        <span class="my-3 col me-1 btn btn-dark text-white"> <i class="fa-solid fa-clone me-2 fs-4"></i> {{ $product->category_name }}</span>
                                     </div>
                                     <div class="my-3"> <i class="fa-solid fa-file-lines me-2 fs-4"></i> Details</div>
                                     <p>{{ $product->description }}</p>

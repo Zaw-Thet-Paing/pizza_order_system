@@ -105,7 +105,7 @@
                                     </td>
                                     <td class="col-3">{{ $product->name }}</td>
                                     <td class="col-2">{{ $product->price }}</td>
-                                    <td class="col-2">{{ $product->category_id }}</td>
+                                    <td class="col-2">{{ $product->category_name }}</td>
                                     <td class="col-2"> <i class="fa-solid fa-eye"></i> {{ $product->view_count }}</td>
                                     <td class="col-2">
                                         <div class="table-data-feature">

@@ -12,9 +12,14 @@ class ProductController extends Controller
 {
     //direct to product list
     public function list(){
-        $products = Product::when(request('key'), function($query){
-            $query->where('name', 'like', '%'.request('key').'%');
-        })->orderBy('created_at', 'desc')->paginate(3);
+        $products = Product::select('products.*', 'categories.name as category_name')
+        ->when(request('key'), function($query){
+            $query->where('products.name', 'like', '%'.request('key').'%');
+        })
+        ->leftJoin('categories', 'products.category_id', 'categories.id')
+        ->orderBy('products.created_at', 'desc')
+        ->paginate(3);
+
         $products->append(request()->all());
         return view('admin.product.pizzaList', compact('products'));
     }
@@ -50,7 +55,9 @@ class ProductController extends Controller
     }
 
     public function edit($id){
-        $product = Product::where('id', $id)->first();
+        $product = Product::select('products.*', 'categories.name as category_name')
+                        ->leftJoin('categories', 'products.category_id', 'categories.id')
+                        ->where('products.id', $id)->first();
         return view('admin.product.edit', compact('product'));
     }
 
