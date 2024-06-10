@@ -20,6 +20,7 @@
                                                 </div>
                                             </div>
                                         @endif
+
                                         <hr>
                                         <form action="{{ route('user#changePassword') }}" method="post" novalidate="novalidate">
                                             @csrf

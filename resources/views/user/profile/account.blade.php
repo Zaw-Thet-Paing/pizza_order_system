@@ -11,9 +11,18 @@
                                 <h3 class="text-center title-2">Account Profile</h3>
                             </div>
 
+                            @if (session('updatedSuccess'))
+                                <div class="">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ session('updatedSuccess') }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            @endif
+
                             <hr>
 
-                            <form action="{{ route('admin#update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('user#accountChange', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-4 offset-1">

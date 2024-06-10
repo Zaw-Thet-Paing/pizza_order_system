@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -45,6 +47,51 @@ class UserController extends Controller
     //user account change
     public function accountChangePage(){
         return view('user.profile.account');
+    }
+
+    //user account change
+    public function accountChange($id, Request $request){
+        $this->accountValidationCheck($request);
+        $data = $this->getUserData($request);
+
+        if($request->hasFile('image')){
+            $dbImage = User::where('id', $id)->first();
+            $dbImage = $dbImage->image;
+
+            if($dbImage != null){
+                Storage::delete('public/'.$dbImage);
+            }
+
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public', $fileName);
+            $data['image'] = $fileName;
+        }
+        User::where('id', $id)->update($data);
+        return back()->with(['updatedSuccess'=> 'User account updated...']);
+    }
+
+    //get user data
+    public function getUserData($request){
+        return [
+            'name'=> $request->name,
+            'email'=> $request->email,
+            'gender'=> $request->gender,
+            'phone'=> $request->phone,
+            'address'=> $request->address,
+            'updated_at'=> Carbon::now()
+        ];
+    }
+
+    //account validation check
+    public function accountValidationCheck($request){
+        Validator::make($request->all(), [
+            'name'=> 'required',
+            'email'=> 'required',
+            'gender'=> 'required',
+            'phone'=> 'required',
+            'image'=> 'mimes:png,jpg,jpeg|file',
+            'address'=> 'required'
+        ])->validate();
     }
 
     //password validation check
