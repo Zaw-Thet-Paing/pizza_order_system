@@ -23,6 +23,9 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('user/css/style.css') }}" rel="stylesheet">
+
+    {{-- bootstrap cdn link  --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
 <body>
@@ -32,7 +35,7 @@
         <div class="row px-xl-5">
             <div class="col-lg-3 mt-2 d-none d-lg-block">
                 <a href="" class="text-decoration-none">
-                    <span class="h1 text-uppercase text-primary bg-dark px-2">Pizza Shop</span>
+                    {{-- <span class="h1 text-uppercase text-primary bg-dark px-2">Pizza Shop</span> --}}
                 </a>
             </div>
             <div class="col-lg-9">
@@ -46,7 +49,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="shop.html" class="nav-item nav-link active">Home</a>
+                            <a href="{{ route('user#home') }}" class="nav-item nav-link">Home</a>
                             <a href="cart.html" class="nav-item nav-link">My Cart</a>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
@@ -60,19 +63,35 @@
                                 <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                             </a> --}}
 
-                            <a href="" class="btn px-0 ml-3 text-white">
+                            {{-- <a href="" class="btn px-0 ml-3 text-white">
                                 <i class="fa-solid fa-user"></i>
                                 {{ Auth::user()->name }}
-                            </a>
-                            <span class="text-white ms-3">|</span>
+                            </a> --}}
 
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                @csrf
-                                <button class="btn bg-dark text-white" type="submit">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                    Logout
-                                </button>
-                            </form>
+                            <div class="dropdown d-inline me-5">
+
+                                <a href="#" class="btn btn-secondary dropdown-togle" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-user me-2"></i>{{ Auth::user()->name }}
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ route('user#accountChangePage') }}" class="dropdown-item my-3"><i class="fa-solid fa-user"></i> Account</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('user#changePasswordPage') }}" class="dropdown-item my-3"><i class="fa-solid fa-key"></i> Change Password</a>
+                                    </li>
+                                    <li class="dropdown-item my-3">
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button class="btn bg-dark text-white" type="submit">
+                                                <i class="fa-solid fa-right-from-bracket"></i>
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
 
                         </div>
                     </div>
@@ -173,6 +192,9 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('user/js/main.js') }}"></script>
+
+    {{-- Bootstrap cdn link  --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
