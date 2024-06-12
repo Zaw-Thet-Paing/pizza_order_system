@@ -4,7 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\User\AjaxController;
 use App\Http\Controllers\User\UserController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 
@@ -82,6 +84,10 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('account')->group(function(){
             Route::get('change', [UserController::class, 'accountChangePage'])->name('user#accountChangePage');
             Route::post('change/{id}', [UserController::class, 'accountChange'])->name('user#accountChange');
+        });
+
+        Route::prefix('ajax')->group(function(){
+            Route::get('pizza/list', [AjaxController::class, 'pizzaList'])->name('ajax#pizzaList');
         });
 
     });
