@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix'=> 'user', 'middleware'=> 'user_auth'], function(){
 
         Route::get('/homePage', [UserController::class, 'home'])->name('user#home');
+        Route::get('/filter/{id}', [UserController::class, 'filter'])->name('user#filter');
 
         Route::prefix('password')->group(function(){
             Route::get('change', [UserController::class, 'changePasswordPage'])->name('user#changePasswordPage');
@@ -86,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('change/{id}', [UserController::class, 'accountChange'])->name('user#accountChange');
         });
 
-        Route::prefix('ajax')->group(function(){
+        Route::prefix('ajax')->middleware('cors')->group(function(){
             Route::get('pizza/list', [AjaxController::class, 'pizzaList'])->name('ajax#pizzaList');
         });
 

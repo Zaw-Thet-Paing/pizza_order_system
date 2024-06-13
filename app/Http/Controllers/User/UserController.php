@@ -94,6 +94,12 @@ class UserController extends Controller
         ])->validate();
     }
 
+    public function filter($categoryId){
+        $products = Product::where('category_id', $categoryId)->orderBy('created_at', 'desc')->get();
+        $categories = Category::get();
+        return view('user.main.home', compact('products', 'categories'));
+    }
+
     //password validation check
     private function passwordValidationCheck($request){
         Validator::make($request->all(), [
