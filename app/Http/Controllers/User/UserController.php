@@ -100,6 +100,13 @@ class UserController extends Controller
         return view('user.main.home', compact('products', 'categories'));
     }
 
+    //direct pizza details
+    public function pizzaDetails($pizzaId){
+        $product = Product::where('id', $pizzaId)->first();
+        $products = Product::get();
+        return view('user.main.details', compact('product', 'products'));
+    }
+
     //password validation check
     private function passwordValidationCheck($request){
         Validator::make($request->all(), [
