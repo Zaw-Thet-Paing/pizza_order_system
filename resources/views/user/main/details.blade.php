@@ -31,24 +31,26 @@
                     </div> --}}
                     <small class="pt-1">{{ $product->view_count }} <i class="fa-solid fa-eye me-2"></i></small>
                 </div>
+                <input type="text" value="{{ Auth::user()->id }}" id="userId" hidden>
+                <input type="text" value="{{ $product->id }}" id="productId" hidden>
                 <h3 class="font-weight-semi-bold mb-4">{{ $product->price }} Kyats</h3>
                 <p class="mb-4">{{ $product->description }}</p>
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
+                            <button class="btn btn-warning btn-minus">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                        <input type="text" class="form-control border-0 text-center" value="1" id="orderCount">
+
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
+                            <button class="btn btn-warning btn-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                        Cart</button>
+                    <button type="button" class="btn btn-warning px-3" id="addCartBtn"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
                 </div>
                 <div class="d-flex pt-2">
                     <strong class="text-dark mr-2">Share on:</strong>
@@ -112,4 +114,32 @@
     </div>
 </div>
 <!-- Products End -->
+@endsection
+
+@section('scriptSource')
+<script>
+    $(document).ready(function(){
+        $('#addCartBtn').click(function(){
+
+            source = {
+                userId: $('#userId').val(),
+                productId: $('#productId').val(),
+                count: $('#orderCount').val(),
+            };
+
+            $.ajax({
+                type: 'get',
+                url: 'http://localhost:8000/user/ajax/addToCart',
+                data: source,
+                dataType: 'json',
+                success: function(response){
+                    // console.log(response)
+                    if(response.status == 'success'){
+                        window.location.href = "http://localhost:8000/user/homePage"
+                    }
+                }
+            })
+        })
+    });
+</script>
 @endsection
