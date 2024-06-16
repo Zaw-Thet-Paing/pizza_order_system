@@ -77,7 +77,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('pizza')->group(function(){
             Route::get('details/{id}', [UserController::class, 'pizzaDetails'])->name('user#pizzaDetails');
+        });
 
+        Route::prefix('cart')->group(function(){
+            Route::get('list', [UserController::class, 'cartList'])->name('user#cartList');
         });
 
         Route::prefix('password')->group(function(){

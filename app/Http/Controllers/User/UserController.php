@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -18,7 +19,8 @@ class UserController extends Controller
     public function home(){
         $products = Product::orderBy('created_at', 'desc')->get();
         $categories = Category::get();
-        return view('user.main.home', compact('products', 'categories'));
+        $cart = Cart::where('user_id', Auth::user()->id)->get();
+        return view('user.main.home', compact('products', 'categories', 'cart'));
     }
 
     //change password page
@@ -70,8 +72,23 @@ class UserController extends Controller
         return back()->with(['updatedSuccess'=> 'User account updated...']);
     }
 
+    //cart list
+    public function cartList(){
+        $cartList = Cart::select('carts.*', 'products.name as product_name', 'products.price as product_price')
+                        ->leftJoin('products', 'products.id', 'carts.product_id')
+                        ->where('carts.user_id', Auth::user()->id)
+                        ->get();
+
+        $totalPrice = 0;
+        foreach($cartList as $c){
+            $totalPrice += ($c->product_price * $c->qty);
+        }
+
+        return view('user.main.cart', compact('cartList', 'totalPrice'));
+    }
+
     //get user data
-    public function getUserData($request){
+    private function getUserData($request){
         return [
             'name'=> $request->name,
             'email'=> $request->email,
