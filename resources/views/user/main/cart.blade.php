@@ -62,7 +62,7 @@
                             <h5>Total</h5>
                             <h5 id="finalPrice">{{ $totalPrice + 3000 }} Kyats</h5>
                         </div>
-                        <button class="btn btn-block btn-warning font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                        <button class="btn btn-block btn-warning font-weight-bold my-3 py-3" id="orderBtn">Proceed To Checkout</button>
                     </div>
                 </div>
             </div>
@@ -122,5 +122,11 @@ $(document).ready(function(){
         $('#finalPrice').html(`${$totalPrice + 3000} Kyats`)
     }
 })
+</script>
+
+<script>
+    $('#orderBtn').click(function(){
+
+    })
 </script>
 @endsection
